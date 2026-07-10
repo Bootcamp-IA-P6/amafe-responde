@@ -8,3 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Proyecto AMAFE
+.env
+data/raw/*
+!data/raw/.gitkeep
+logs/*.jsonl
+chroma_db/
