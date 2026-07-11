@@ -1,0 +1,18 @@
+cat > .env.example << 'EOF'
+# Ruta al corpus extraído (carpeta amafe_web del proyecto P12JJ_AMAFE)
+CORPUS_PATH=D:\P12JJ_AMAFE\descargas\amafe_web
+
+# LLM - Fase 1: Ollama local
+LLM_BASE_URL=http://localhost:11434/v1
+LLM_MODEL=qwen3:8b
+LLM_API_KEY=ollama
+
+# LLM - Fase 2: Groq (descomentar cuando toque)
+# LLM_BASE_URL=https://api.groq.com/openai/v1
+# LLM_MODEL=llama-3.3-70b-versatile
+# LLM_API_KEY=<tu_clave_groq>
+EOF
+
+cp .env.example .env
+# Edita .env con la ruta real del corpus:
+npp .env
