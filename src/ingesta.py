@@ -1,5 +1,5 @@
 """
-ingesta.py v2 - Extrae, limpia y trocea las páginas web del corpus AMAFE.
+ingesta.py v3 - Extrae, limpia y trocea las páginas web del corpus AMAFE.
 
 Novedades v2 (decisión JJ 20260711):
 - Filtrado estadístico de boilerplate: líneas presentes en >40% de las
@@ -33,6 +33,21 @@ EXCLUDED_SLUGS = {"newpagede8c1075"}  # borradores (mapa web, sección 17.4)
 # Línea de metadatos inyectada por descarga_amafe.py (no es contenido de la web)
 EXTRAIDO_RE = re.compile(r"^\s*-\s*Extraido:\s*\d{4}-\d{2}-\d{2}")
 
+# v3: enlaces markdown -> solo el texto visible (las URLs CDN firmadas
+# contaminaban los embeddings; la URL de la página vive en los metadatos)
+MD_IMAGE_RE = re.compile(r"!\[([^\]]*)\]\([^)]*\)")
+MD_LINK_RE = re.compile(r"\[([^\]]*)\]\([^)]*\)")
+
+
+def strip_markdown_links(text: str) -> str:
+    text = MD_IMAGE_RE.sub(r"\1", text)
+    for _ in range(3):  # enlaces anidados en varias pasadas
+        new = MD_LINK_RE.sub(r"\1", text)
+        if new == text:
+            break
+        text = new
+    return text
+
 SLUG_TITLE_RE = re.compile(
     r"^\d[\d.]*\.{2,}\s*/(?P<slug>\S+?)\s+—\s+(?P<title>.+?)"
     r"(?:\s*\[\d+\s*documentos?\])?(?:\s*⚠)?\s*$"
@@ -65,7 +80,7 @@ def load_page_text(slug_dir: Path) -> str | None:
     md_path = slug_dir / f"{slug_dir.name}.md"
     if not md_path.exists():
         return None
-    return md_path.read_text(encoding="utf-8", errors="replace")
+    return strip_markdown_links(md_path.read_text(encoding="utf-8", errors="replace"))
 
 
 def detect_boilerplate(texts_by_lang: dict[str, list[str]]) -> dict[str, set[str]]:
