@@ -1,5 +1,5 @@
 """
-ingesta.py v3 - Extrae, limpia y trocea las páginas web del corpus AMAFE.
+ingesta.py v3.1 - Extrae, limpia y trocea las páginas web del corpus AMAFE.
 
 Novedades v2 (decisión JJ 20260711):
 - Filtrado estadístico de boilerplate: líneas presentes en >40% de las
@@ -27,6 +27,7 @@ OUTPUT_PATH = Path("data/processed/chunks.jsonl")
 CHUNK_SIZE = 1000        # tamaño objetivo por chunk (caracteres)
 CHUNK_OVERLAP_PARAS = 1  # párrafos de solapamiento entre chunks
 BOILERPLATE_THRESHOLD = 0.40  # línea en >40% de páginas del mismo idioma = menú/pie
+MIN_CHUNK_CHARS = 50     # v3.1: chunks más cortos se descartan (ruido)
 
 EXCLUDED_SLUGS = {"newpagede8c1075"}  # borradores (mapa web, sección 17.4)
 
@@ -66,7 +67,7 @@ def parse_mapa_web(path: Path) -> dict[str, dict]:
             pages[slug] = {
                 "title": m.group("title").strip(),
                 "url": None,
-                "lang": "en" if slug.startswith("en_gb_") else "es",
+                "lang": "en" if (slug == "en_gb" or slug.startswith("en_gb_")) else "es",
             }
             current_slug = slug
             continue
@@ -194,7 +195,8 @@ def main() -> None:
             continue
         seen_hashes[content_hash] = slug
 
-        for i, chunk in enumerate(chunk_by_paragraphs(cleaned)):
+        trozos = [t for t in chunk_by_paragraphs(cleaned) if len(t) >= MIN_CHUNK_CHARS]
+        for i, chunk in enumerate(trozos):
             chunks_out.append({
                 "chunk_id": f"{slug}__{i:03d}",
                 "texto": chunk,
