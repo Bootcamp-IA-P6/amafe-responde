@@ -92,3 +92,26 @@ Convención: cada entrada indica fecha, decisión, evidencia y estado.
   filtrar. Consecuencia observada: un diff entre el JSONL bruto y el filtrado
   no encuentra ninguna línea común y vuelca ambos ficheros enteros (112 KB).
   No afecta a la validez de los datos (el CR final es whitespace para JSON).
+
+## 20260713 — Inventario de PDFs y decisión de alcance (P1 → O1 → O2)
+
+- inventario_pdf.py v1.1 (solo lectura) sobre CORPUS_PATH: 128 PDFs en disco,
+  86 únicos (42 copias por hash SHA-256, incluidas copias con sufijo CDN).
+- Tipos: DIGITAL=34, ESCANEADO=28, MIXTO=24. Páginas que requerirían OCR: 721.
+- Hallazgo crítico: las auditorías (10 docs, 305 pág) son 100% escaneadas:
+  cero caracteres extraíbles. Las memorias 2016-2025 (12 docs, 1,19M chars) y
+  los boletines 2022+ son extraíbles ya; total listo sin OCR: 2,87M chars
+  (~4-5x el corpus web actual).
+- v1 → v1.1: el patrón de auditoría no cazaba la serie Informe_y_cuentas
+  2015-2021 (sin la palabra "auditoría"); añadido patrón 'cuentas', medido
+  contra los 106 nombres reales del tree.
+- 5 documentos sensibles identificados y excluidos (actas firmadas,
+  delegación de voto, candidatos a junta). Estrategia: lista blanca, nunca
+  lista negra.
+- Decisión de alcance: O1 elegida (extraer texto de DIGITAL+MIXTO aprobados +
+  chunk de METADATOS por cada ESCANEADO aprobado: la pregunta del briefing
+  "qué información pública existe sobre auditorías" se responde con
+  existencia+ubicación, sin OCR). O2 (OCR Tesseract, ~721 pág) como fase
+  posterior sin rehacer nada. O3 descartada.
+- Orden de trabajo: ingesta_pdf.py antes que app.py (el corpus x5 justifica
+  el adelanto).
