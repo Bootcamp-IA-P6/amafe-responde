@@ -115,3 +115,25 @@ Convención: cada entrada indica fecha, decisión, evidencia y estado.
   posterior sin rehacer nada. O3 descartada.
 - Orden de trabajo: ingesta_pdf.py antes que app.py (el corpus x5 justifica
   el adelanto).
+
+## 20260714 — Fix estructural run/banner por stderr (R1)
+
+- Cierra el pendiente del 20260713: `banner()` y `run()` del `.bashrc` emiten ahora sus líneas informativas por **stderr** (`>&2`).
+- Motivo: `run comando > fichero` capturaba el banner en el fichero redirigido y contaminó dos veces los JSONL de experimentos.
+- Verificado el 20260714: la redirección de stdout ya no arrastra el banner; los logs JSONL quedan limpios sin parser tolerante.
+
+## 20260714 — Cambio de alcance: MVP solo-web (H1)
+
+- Decisión del responsable de formación/patrocinador: **priorizar un MVP que use únicamente el corpus web actual** (605 chunks); la incorporación de PDFs pasa a fases sucesivas.
+- Consecuencias:
+    - La revisión manual de la lista blanca de PDFs queda **PAUSADA, no descartada** (etiquetas [OKI]/[OKI+NOMBRES] conservadas donde estaban).
+    - `ingesta_pdf.py` (D1a/D2a/D3a) e `indexado` v2 se aplazan; las decisiones de diseño ya tomadas siguen vigentes para cuando se retomen.
+    - La pregunta del briefing sobre auditorías queda como **limitación conocida y documentada** del MVP: argumento de roadmap para fase 2, no defecto.
+- **H1a — Hoja de ruta MVP confirmada por JJ (20260714):**
+    - M1. Repo público en GitHub (org Bootcamp-IA-P6, gh CLI, licencia MIT, README técnico, GitHub Projects como Kanban).
+    - M2. `app.py` con Streamlit: pregunta, respuesta con citas, fuentes con URL, no-sé, preguntas sugeridas, log JSONL.
+    - M3. Groq como LLM (cosecha de la decisión 1a: cambio de 3 variables del .env). Primera clave secreta real del proyecto.
+    - M4. Batería de 20 preguntas + runner del informe de evaluación; ejecución comparada Ollama vs Groq; recalibración de U1.
+    - M5. Dockerización (app ligera; LLM fuera vía API).
+    - M6. Despliegue (Streamlit Community Cloud vs HF Spaces, a decidir entonces).
+- Orden acordado dentro de M1 (H1d): registrar esta entrada → auditoría pre-push del repo (historial de .env, secretos, exclusiones) → LICENSE MIT + .gitignore ampliado → `gh repo create --public --source=. --push`.

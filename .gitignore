@@ -18,3 +18,9 @@ chroma_db/
 
 .obsidian/
 downloads/
+
+# M1 — Exclusiones del repo público, decisión E1a (20260714)
+logs/*
+!logs/.gitkeep
+eval/lista_blanca*.csv
+*inventario_pdf*.csv
