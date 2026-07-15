@@ -138,6 +138,8 @@ Convención: cada entrada indica fecha, decisión, evidencia y estado.
     - M6. Despliegue (Streamlit Community Cloud vs HF Spaces, a decidir entonces).
 - Orden acordado dentro de M1 (H1d): registrar esta entrada → auditoría pre-push del repo (historial de .env, secretos, exclusiones) → LICENSE MIT + .gitignore ampliado → `gh repo create --public --source=. --push`.## 20260715 — Incidencia M1: push adelantado y remediación (R2a, C1a)
 
+## 20260715 — Incidencia M1: push adelantado y remediación (R2a, C1a)
+
 - **Incidencia (20260714)**: el primer `gh repo create --push` se ejecutó
   antes de aplicar las exclusiones E1a y de resolver los hallazgos de la
   auditoría pre-push. El repo público contuvo durante ~2 h logs de trabajo
@@ -164,3 +166,4 @@ Convención: cada entrada indica fecha, decisión, evidencia y estado.
   descriptivos.
 - **Lección para el checklist**: el push es SIEMPRE el último paso;
   auditoría → hallazgos resueltos → exclusiones → LICENSE → push.
+
