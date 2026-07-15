@@ -136,7 +136,7 @@ Convención: cada entrada indica fecha, decisión, evidencia y estado.
     - M4. Batería de 20 preguntas + runner del informe de evaluación; ejecución comparada Ollama vs Groq; recalibración de U1.
     - M5. Dockerización (app ligera; LLM fuera vía API).
     - M6. Despliegue (Streamlit Community Cloud vs HF Spaces, a decidir entonces).
-- Orden acordado dentro de M1 (H1d): registrar esta entrada → auditoría pre-push del repo (historial de .env, secretos, exclusiones) → LICENSE MIT + .gitignore ampliado → `gh repo create --public --source=. --push`.## 20260715 — Incidencia M1: push adelantado y remediación (R2a, C1a)
+- Orden acordado dentro de M1 (H1d): registrar esta entrada → auditoría pre-push del repo (historial de .env, secretos, exclusiones) → LICENSE MIT + .gitignore ampliado → `gh repo create --public --source=. --push`
 
 ## 20260715 — Incidencia M1: push adelantado y remediación (R2a, C1a)
 
