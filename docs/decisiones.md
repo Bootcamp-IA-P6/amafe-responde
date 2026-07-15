@@ -136,4 +136,31 @@ Convención: cada entrada indica fecha, decisión, evidencia y estado.
     - M4. Batería de 20 preguntas + runner del informe de evaluación; ejecución comparada Ollama vs Groq; recalibración de U1.
     - M5. Dockerización (app ligera; LLM fuera vía API).
     - M6. Despliegue (Streamlit Community Cloud vs HF Spaces, a decidir entonces).
-- Orden acordado dentro de M1 (H1d): registrar esta entrada → auditoría pre-push del repo (historial de .env, secretos, exclusiones) → LICENSE MIT + .gitignore ampliado → `gh repo create --public --source=. --push`.
+- Orden acordado dentro de M1 (H1d): registrar esta entrada → auditoría pre-push del repo (historial de .env, secretos, exclusiones) → LICENSE MIT + .gitignore ampliado → `gh repo create --public --source=. --push`.## 20260715 — Incidencia M1: push adelantado y remediación (R2a, C1a)
+
+- **Incidencia (20260714)**: el primer `gh repo create --push` se ejecutó
+  antes de aplicar las exclusiones E1a y de resolver los hallazgos de la
+  auditoría pre-push. El repo público contuvo durante ~2 h logs de trabajo
+  y el CSV del inventario de PDFs (nombres de fichero procedentes de la web
+  pública de AMAFE, incluidos los 5 documentos excluidos de la lista blanca).
+- Verificaciones de la auditoría: `.env` nunca estuvo en el historial
+  (A1=0); el único match del barrido de secretos (A3=1) se verificó como
+  falso positivo (la línea `api_key=LLM_API_KEY` de generacion.py).
+- **Remediación R2a**: backup .tgz pre-filtro → `git filter-repo` purgando
+  `logs/*.log` y `*inventario_pdf*.csv` de todo el historial (15 commits
+  conservados, 0 apariciones tras la purga) → borrado del repo remoto
+  contaminado → republicación del historial limpio (20260715). Hashes
+  reescritos: los enlaces a commits anteriores quedan invalidados.
+- **Revisión de sensibilidad sobre el backup real** (43 ficheros tracked):
+  sin rutas locales, sin nombres de máquina ni datos personales; todos los
+  emails y teléfonos del corpus son contactos oficiales públicos de AMAFE
+  (info@, móvil de contacto, CIF), que el asistente debe poder citar.
+- **C1a — Email de autor**: se mantiene el email personal en los commits
+  (decisión consciente; ya expuesto en repos públicos anteriores).
+  Mitigación hacia adelante: ajustes de privacidad de email en GitHub y
+  bloqueo de pushes que expongan el email.
+- Verificación post-republicación vía API de GitHub: 44 ficheros, `logs/`
+  solo con `.gitkeep`, cero CSV/logs, licencia MIT reconocida, 16 commits
+  descriptivos.
+- **Lección para el checklist**: el push es SIEMPRE el último paso;
+  auditoría → hallazgos resueltos → exclusiones → LICENSE → push.
