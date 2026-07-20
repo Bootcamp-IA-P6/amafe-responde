@@ -167,3 +167,36 @@ Convención: cada entrada indica fecha, decisión, evidencia y estado.
 - **Lección para el checklist**: el push es SIEMPRE el último paso;
   auditoría → hallazgos resueltos → exclusiones → LICENSE → push.
 
+## 20260720 — M3: Groq como LLM en la nube (G1b)
+
+- Contexto de catálogo (verificado en console.groq.com/docs/models el
+  20260720): los modelos Qwen en Groq están solo en *preview* (no aptos para
+  producción), descartando repetir la familia del modelo local.
+- **G1b elegido: `llama-3.1-8b-instant`** (producción, ~560 t/s, $0.05/$0.08
+  por 1M tokens, gratis en el free tier). Motivo: el más rápido y barato de
+  los candidatos y de tamaño hermano del qwen3:8b local — habilita una
+  comparativa "de igual a igual" en la batería M4. Alternativas registradas:
+  llama-3.3-70b-versatile (más calidad, más coste) y gpt-oss-20b (razonador,
+  más incógnitas de API).
+- Cambio efectivo: solo las 3 variables del .env previstas por la decisión 1a
+  (LLM_BASE_URL, LLM_MODEL, LLM_API_KEY). Cero cambios de código.
+- **Primera ejecución** (logs/groq_primera.20260720131337L.json), misma
+  pregunta patrón "¿Qué es el Espacio Joven?":
+  - Recuperación idéntica byte a byte a la de Ollama (mismos 5 chunks y
+    similitudes): la capa de recuperación no depende del LLM, verificado.
+  - Latencia del pipeline completo ≈13 s (frente a ~5 min del qwen3:8b en
+    CPU); la generación pura en Groq es de segundos.
+  - Cero fugas de <think>: con Llama, el /no_think y la regex de 1a quedan
+    como red de seguridad inerte, según lo diseñado.
+- **Observación cualitativa nº1 para M4 (fidelidad de atribución)**: la
+  respuesta atribuye a Espacio Joven una afirmación genérica del chunk
+  salud_mental__024 sobre recursos de intervención temprana; el contenido
+  existe en la fuente, la atribución es una extensión del modelo (el qwen
+  local no empleó ese chunk). Candidata a criterio de la batería de 20.
+- Free tier de Groq verificado como suficiente para M4 (límites por
+  organización: ~30 req/min y 6K-30K tokens/min según modelo); el runner de
+  la batería incluirá una pausa entre preguntas.
+- Seguridad: clave nueva y exclusiva del proyecto, presente solo en .env
+  (gitignorado; historial verificado A1=0). El dict de trazabilidad no
+  transporta la clave (verificado sobre JSON real).
+
