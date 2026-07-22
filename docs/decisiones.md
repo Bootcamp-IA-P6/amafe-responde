@@ -240,3 +240,28 @@ con Groq la latencia es de segundos).
   HA2b, recarga sin reescritura y con corruptas descartadas, limpieza sin
   tocar el JSONL, y error de backend sin registro.
 
+## 20260722 — Mapa de URLs del proyecto (U-M1b, U-M2b)
+
+Adaptación al P12 del centro de navegación `docs/URLS.md` del P10JJ.
+
+- **U-M1b — Generación por script**: `scripts/show_urls.sh` regenera
+  `docs/URLS.md` completo en cada ejecución: issues y PRs reales vía
+  `gh api` (separando PRs por la clave `pull_request` de la API), inventario
+  de ficheros clave vía `git ls-files` (src/, app/, tests/ — los módulos
+  nuevos entran solos), enlaces RAW desde `main`, Kanban #77 y recursos
+  externos. Salida con LF puro y salto de línea final (`newline="\n"`).
+  El fichero generado lleva aviso de "no editar a mano". Descartada U-M1a
+  (mantenimiento manual): la "última revisión" dejaría de ser veraz.
+- **U-M2b — PR propio**: rama `feature/urls-mapa` tras el merge de M2b
+  (un PR = un tema). Descartada U-M2a (colar el mapa en el PR de M2b).
+- La primera versión estática sellada (URLS.20260722090634X.md) queda en
+  `downloads/` como referencia local, fuera del repo: un solo origen de
+  verdad, el generado.
+- **Verificación en sandbox**: ejecución del script con shims de `gh`/`uv`
+  y fixtures que replican la forma real de la API (captura real de issues
+  actualizada con el transcript del merge #11; pulls con el esquema estándar).
+  Resultado: 8 issues y 3 PRs mergeados listados, bloques dinámicos
+  correctos sobre main@40f9770, cero CRLF, salto final presente. En la
+  máquina real `gh api` va autenticado (sin el rate limit anónimo que
+  afectó al sandbox).
+
