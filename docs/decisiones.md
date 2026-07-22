@@ -200,3 +200,43 @@ Convención: cada entrada indica fecha, decisión, evidencia y estado.
   (gitignorado; historial verificado A1=0). El dict de trazabilidad no
   transporta la clave (verificado sobre JSON real).
 
+## 20260721 — M2b: historial y persistencia en la app Streamlit
+
+Encargo del tutor sobre la app M2. Material de estudio: tutorial oficial de
+apps conversacionales de Streamlit
+(https://docs.streamlit.io/develop/tutorials/chat-and-llm-apps/build-conversational-apps),
+adaptado al contrato propio (dict completo de `generar_respuesta()`, `.env` en
+lugar de `secrets.toml`, sin streaming: el contrato devuelve el dict cerrado y
+con Groq la latencia es de segundos).
+
+- **HA1a — Historial visual por dicts completos**: `st.session_state.historial`
+  guarda el dict íntegro de `generar_respuesta()` por turno; el bocadillo del
+  asistente se pinta con la misma lógica rica de M2 (respuesta+citas+fuentes+
+  expander D1a, o aviso no-sé+descartados) más caption de trazabilidad por
+  turno (modelo, temperature, umbral, timestamp). Descartada HA1b (solo texto):
+  perdía fuentes y guardarraíles visibles.
+- **HA2b — Preguntas sugeridas solo con historial vacío** (estilo ChatGPT):
+  desaparecen al primer turno y reaparecen tras limpiar. Descartadas HA2a
+  (siempre visibles) y HA2c (sidebar).
+- **HB1b — Recarga manual del historial**: botón "Cargar historial anterior"
+  que relee `logs/consultas_app.jsonl` (D3a) completo, antepone los turnos al
+  historial en curso, descarta líneas corruptas contándolas, y se deshabilita
+  tras cargar (una vez por sesión; se rehabilita al limpiar). Descartadas HB1a
+  (recarga automática de N) y HB1c (todo siempre). La recarga NUNCA reescribe
+  el JSONL (verificado byte a byte en pruebas).
+- **HB2a — Limpiar solo lo visual**: el botón vacía `session_state.historial`;
+  el JSONL es el registro de trazabilidad y no se toca.
+- **HC0 — Sin memoria conversacional del LLM**: fuera de alcance salvo
+  petición explícita del tutor; `generar_respuesta()` queda intacta.
+- **S1 — Spinner dinámico**: "varios minutos" solo si `LLM_BASE_URL` apunta a
+  localhost; con backend en nube, mensaje con el nombre del modelo.
+- **Incidencia detectada en pruebas**: el `disabled` del botón de recarga se
+  evaluaba antes de procesar el clic (un rerun tarde), dejando una ventana de
+  doble clic que duplicaría turnos. Corregido con `st.rerun()` inmediato tras
+  cargar y tras limpiar; cubierto por los casos 4 y 5.
+- **Verificación**: `tests/test_app_m2b.py` (AppTest, mock de `generacion` con
+  el contrato real verificado sobre `logs/consultas_app.jsonl`): 6/6 casos
+  verdes — respuesta completa con JSONL de 1 línea LF pura, no-sé sin fuentes,
+  HA2b, recarga sin reescritura y con corruptas descartadas, limpieza sin
+  tocar el JSONL, y error de backend sin registro.
+
