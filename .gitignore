@@ -14,7 +14,7 @@ wheels/
 data/raw/*
 !data/raw/.gitkeep
 logs/*.jsonl
-chroma_db/
+!chroma_db/
 
 .obsidian/
 downloads/

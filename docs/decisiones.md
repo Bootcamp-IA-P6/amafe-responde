@@ -265,3 +265,70 @@ Adaptación al P12 del centro de navegación `docs/URLS.md` del P10JJ.
   máquina real `gh api` va autenticado (sin el rate limit anónimo que
   afectó al sandbox).
 
+## 20260722-23 — M4: batería de evaluación, comparativa de modelos y umbral (issues #4 y #5)
+
+Encargo: dataset de 20 preguntas + informe de evaluación (nivel avanzado del
+briefing), ampliado por indicación del tutor con comparativa de modelos de
+más calidad en Groq (nivel experto) tras cancelar la tanda local qwen3:8b
+(un smoke real midió 360 s/pregunta en CPU: ~2 h la tanda completa).
+
+- **Q1c — Dataset mixto**: 20 candidatas redactadas por Claude en 5 bloques
+  (10 literales del briefing, 4 paráfrasis, 3 fuera de corpus, 2 sobre la
+  debilidad financiación/auditorías, 1 en inglés), vetadas y aprobadas por
+  JJ sin cambios. Congelado en `eval/preguntas.jsonl` (id, pregunta,
+  categoría, esperado, nota). Descartadas Q1a (sin veto) y Q1b (desde cero).
+- **Q2a — Evaluación manual estructurada** (guardarraíl, fuentes, fidelidad,
+  citas) con informe en `eval/informe_evaluacion.md`. RAGAS (Q2b) queda
+  como línea futura.
+- **Runner**: `eval/runner_bateria.py` (pausa configurable para el free
+  tier, fusión dataset+trazabilidad, error registrado sin detener tanda;
+  stdout=ruta de datos, stderr=progreso — R1). Probado con
+  `tests/test_runner_m4.py`: 3/3 verdes con mock del contrato real
+  inyectado vía sys.modules (wrapper runpy).
+- **Q4a — Batería antes que umbral**: las distancias reales de las 20
+  preguntas son la evidencia de U1. Descartada Q4b (recalibrar a ojo).
+- **Tres tandas** (22/07): `llama-3.1-8b-instant` (285,6 s),
+  `openai/gpt-oss-20b` (208,4 s) y `openai/gpt-oss-120b` (202,9 s) —
+  G2b y G2a marcadas sucesivamente por JJ. Recuperación idéntica verificada
+  en las tres (mismas mejor_distancia): la comparación aísla la generación.
+  Resultados: 17/20 → 18/20 → 19/20; q12 (falso no-sé) resiste a los tres
+  = fallo puro de recuperación con degradación segura (fail-safe); q11 la
+  arreglan ambos gpt-oss (el dato estaba en el chunk [2]: fallo generativo
+  del 8B); q20 solo el 120B responde en inglés; 0 alucinaciones en 60
+  generaciones (fidelidad verificada normalizando espacios: gpt-oss usa
+  narrow no-break space U+202F en cifras).
+- **U1a — Mantener UMBRAL_DISTANCIA=0.75** (cierra issue #5): la capa 1 no
+  se activó en ninguna de las 60 generaciones (máx. distancia 0.6812) y no
+  existe umbral separador (q17=0.6267 debe callar vs q03=0.6245 debe
+  responder; q16=0.3546 fuera de corpus por debajo de la mayoría de las
+  correctas). La capa 2 (prompt) queda documentada como guardarraíl
+  efectivo: 6/6 no-sé finales correctos. Descartadas U1b (0.65) y U1c (0.70).
+- **G3a — Modelo de producción: `openai/gpt-oss-120b`**: mejor medido
+  (19/20), único que respeta el idioma (q20) y cita el 100 % de las
+  respuestas; además la migración desde llama-3.1-8b-instant es obligatoria
+  (Groq lo apaga el 16/08/2026, anuncio del 17/06). Matiz documentado:
+  cita ocasionalmente con corchetes tipográficos 【n】 (cosmético).
+  Cambios: `.env` local de JJ, `.env.example` y tabla del README.
+  Descartadas G3b (gpt-oss-20b, 18/20) y G3c (ronda extra de prompts).
+- **Mejoras sistémicas detectadas** (independientes del modelo, fuera de
+  M4): reforzar regla 6 del prompt (idioma; 8B y 20B tradujeron q20) y
+  regla 2 (citas en respuestas tipo lista, q02). Candidatas a mini-issue.
+- **Va — Informe validado** por JJ (23/07) sobre el borrador v3 con
+  comparativa triple; materiales de apoyo generados para la evaluación
+  manual: respuestas de los 3 modelos y atlas del corpus con los 605
+  chunks íntegros (documentos de trabajo, fuera del repo).
+
+## 20260723 — IDX1a: índice ChromaDB incluido en el repo (preparación M6a)
+
+Streamlit Community Cloud despliega desde el repo de GitHub, y `chroma_db/`
+estaba gitignorado: la app en la nube no tendría índice.
+
+- **IDX1a — Commitear `chroma_db/`** (11 MB medidos con `du -sh`): arranque
+  inmediato en la nube sin coste de cómputo, y quien clona el repo puede usar
+  la app sin ejecutar ingesta ni indexado. `.gitignore` ajustado
+  (`!chroma_db/`). Descartada IDX1b (reconstruir el índice al arrancar desde
+  `data/processed/chunks.jsonl`): primer arranque lento y RAM justa en el
+  tier gratuito con el modelo de embeddings cargado.
+- Efecto colateral positivo documentado en el README: instalación sin corpus
+  local (los pasos de ingesta/indexado quedan solo para regenerarlo).
+
