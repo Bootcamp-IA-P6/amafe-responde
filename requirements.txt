@@ -340,6 +340,7 @@ tokenizers==0.22.2
 toml==0.10.2
     # via streamlit
 torch==2.13.0+cpu
+torchvision==0.28.0+cpu
     # via sentence-transformers
 tqdm==4.68.4
     # via
