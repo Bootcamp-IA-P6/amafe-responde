@@ -3,10 +3,10 @@
 Asistente de consulta en lenguaje natural sobre la documentación pública de
 [AMAFE](https://amafe.org) (Asociación Española de Apoyo en Psicosis),
 construido con una arquitectura **RAG** (Retrieval-Augmented Generation).
-Funciona con LLM en la nube (Groq) 
+Funciona con LLM en la nube (Groq) o íntegramente en local (Ollama) — el
+código es idéntico en ambos modos.
+
 🌐 **App en vivo**: https://amafe-responde.streamlit.app
-o íntegramente en local (Ollama) 
-— el código es idéntico en ambos modos.
 
 > ⚠️ **Aviso**: este es un proyecto formativo (proyecto final del Bootcamp de
 > IA de Factoría F5) y **no es una herramienta oficial de AMAFE**. Utiliza

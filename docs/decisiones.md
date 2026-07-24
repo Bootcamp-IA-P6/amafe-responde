@@ -364,3 +364,37 @@ App pública en producción: **https://amafe-responde.streamlit.app**
   free tier de Groq); `logs/consultas_app.jsonl` en la nube es efímero (se
   pierde en cada reinicio) — el registro de referencia sigue siendo el local.
 
+## 20260724 — M5: dockerización de la aplicación (issue #6)
+
+Imagen Docker autocontenida, construida y verificada en local (Docker 29.1.3
+sobre Windows 11/WSL2). Build de ~10 min; imagen 1,52 GB (4,79 GB en disco
+local por las capas descomprimidas).
+
+- **Dockerfile** (`python:3.12-slim`): dependencias del `requirements.txt`
+  CPU de M6a (capa cacheable), modelo de embeddings horneado en build
+  (BLD1a) con `HF_HUB_OFFLINE=1` fijado después (el runtime no toca la red
+  para embeddings), COPY selectivo (`src/`, `app/`, `chroma_db/`), usuario
+  sin privilegios UID 1000 (recomendación de HF Spaces) y `logs/`
+  escribible. `.dockerignore` como blindaje adicional (nunca `.env`, `.git`
+  ni `logs/`).
+- **Secretos solo en runtime**: `docker run --env-file .env`; verificado que
+  `docker run --rm amafe-responde env | grep LLM` sale vacío — la imagen no
+  contiene credenciales.
+- **Incidencia y lección — dotenv parsea, `--env-file` no**: un comentario
+  en línea en el `.env` (`UMBRAL_DISTANCIA=0.75   # ...`) funciona en local
+  porque python-dotenv recorta el comentario, pero `docker --env-file` pasa
+  el valor íntegro y `float()` revienta. Regla adoptada: en `.env`, los
+  comentarios SIEMPRE en línea propia y los valores sin comillas
+  (detector: `grep -n "=.*#" .env`).
+- **Detalle asumido**: el filtro del requirements eliminó los paquetes
+  `nvidia-*`/`triton` pero se colaron `cuda-bindings`/`cuda-pathfinder`/
+  `cuda-toolkit` (~7 MB, arrastrados por dependencias); inofensivos sin
+  GPU, no justifican rebuild.
+- **Verificación (mini-M4 en el contenedor, capturas del 24/07)**:
+  "¿Qué es el Espacio Joven?" → respuesta con citas, fuentes y caption
+  `openai/gpt-oss-120b · umbral 0.75`; "¿Cuánto cuesta la entrada al Museo
+  del Prado?" → no-sé. Observación registrada para mini-issue posterior:
+  cuando el no-sé llega por capa 2 (llm_llamado=true), la app muestra
+  "Fuentes consultadas" bajo el mensaje — inconsistencia visual heredada
+  de M2, sin impacto en veracidad.
+
