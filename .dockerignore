@@ -1,0 +1,18 @@
+# .dockerignore — AMAFE Responde
+# El Dockerfile usa COPY selectivo, pero esta lista blinda contra cualquier
+# COPY amplio futuro y acelera el contexto de build.
+.git
+.env
+.env.*
+!.env.example
+logs/
+downloads/
+eval/
+tests/
+docs/
+scripts/
+data/
+notebooks/
+__pycache__/
+*.pyc
+.venv/
