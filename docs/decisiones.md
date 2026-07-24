@@ -332,3 +332,35 @@ estaba gitignorado: la app en la nube no tendría índice.
 - Efecto colateral positivo documentado en el README: instalación sin corpus
   local (los pasos de ingesta/indexado quedan solo para regenerarlo).
 
+## 20260723 — M6a: despliegue en Streamlit Community Cloud (issue #15)
+
+Orden del tutor (22/07): desplegar en Streamlit Cloud antes de dockerizar.
+App pública en producción: **https://amafe-responde.streamlit.app**
+
+- **Dependencias para la nube**: `requirements.txt` generado desde `uv.lock`
+  (`uv export`) y adaptado a CPU: `torch==2.13.0+cpu` con el índice CPU de
+  PyTorch y 16 paquetes nvidia/triton eliminados (la variante CUDA, ~3-4 GB,
+  es inútil sin GPU y arriesga los límites del tier gratuito). PR #16.
+- **Hotfix torchvision** (PR #17): en la nube, `transformers` importa
+  `torchvision` (image_processing_zoedepth) y no estaba en el lock — en
+  local existía instalado aparte (era el origen de los tracebacks del
+  watcher). Añadido `torchvision==0.28.0+cpu`; emparejamiento verificado en
+  PyPI (0.28.0 requiere exactamente torch==2.13.0).
+- **Configuración del despliegue**: repo `Bootcamp-IA-P6/amafe-responde`,
+  rama `main`, main file `app/app.py`, Python 3.12. El índice ChromaDB viaja
+  en el repo (IDX1a): arranque sin ingesta ni indexado.
+- **Secrets**: LLM_BASE_URL, LLM_MODEL y LLM_API_KEY en el panel de la app
+  (TOML de nivel raíz → expuestos como variables de entorno → `os.getenv`
+  los lee sin cambios de código). La clave de Groq nunca toca el repo.
+  Incidencia documentada: el editor de Secrets de App settings no aceptaba
+  ratón en tres navegadores/modos; solución: enfocar el editor navegando
+  con Tab y pegar con Ctrl+V (solo admite pegado). Alternativa documentada:
+  el campo Secrets de "Advanced settings" al desplegar.
+- **Verificación en producción** (vídeo del 23/07, fotogramas extraídos):
+  la app responde "¿Qué es el Espacio Joven?" con cita, fuentes enlazadas,
+  expander de fragmentos y caption de trazabilidad mostrando
+  `openai/gpt-oss-120b` (G3a en producción).
+- **Notas operativas**: app pública (las consultas de terceros consumen el
+  free tier de Groq); `logs/consultas_app.jsonl` en la nube es efímero (se
+  pierde en cada reinicio) — el registro de referencia sigue siendo el local.
+

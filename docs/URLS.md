@@ -2,7 +2,7 @@
 
 > Centro de navegación del proyecto AMAFE Responde (P12JJ).
 > Generado automáticamente por `scripts/show_urls.sh`.
-> Última revisión: 2026-07-23
+> Última revisión: 2026-07-24
 
 ---
 
@@ -28,6 +28,8 @@
 - **#11** feat(app): historial y persistencia en Streamlit (M2b) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/11
 - **#13** docs(repo): centro de navegación docs/URLS.md — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/13
 - **#14** feat(eval): batería, comparativa de 3 modelos y umbral (M4) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/14
+- **#16** feat(deploy): preparación Streamlit Community Cloud (M6a) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/16
+- **#17** fix(deploy): torchvision cpu (M6a) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/17
 
 ---
 
@@ -37,7 +39,7 @@
 - Abiertas: https://github.com/Bootcamp-IA-P6/amafe-responde/issues?q=is%3Aissue+is%3Aopen
 - Cerradas: https://github.com/Bootcamp-IA-P6/amafe-responde/issues?q=is%3Aissue+is%3Aclosed
 
-### Listado (estado a 2026-07-23)
+### Listado (estado a 2026-07-24)
 
 - **#1** [cerrada] M1 · README técnico — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/1
 - **#2** [cerrada] M2 · app.py con Streamlit — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/2
@@ -48,6 +50,7 @@
 - **#7** [abierta] M6 · Despliegue en entorno accesible — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/7
 - **#10** [cerrada] M2b — Historial y persistencia en la app Streamlit — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/10
 - **#12** [cerrada] docs(repo) — Centro de navegación docs/URLS.md generado por script — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/12
+- **#15** [abierta] M6a — Despliegue en Streamlit Community Cloud — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/15
 
 ---
 
