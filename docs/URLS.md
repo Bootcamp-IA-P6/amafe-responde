@@ -30,6 +30,8 @@
 - **#14** feat(eval): batería, comparativa de 3 modelos y umbral (M4) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/14
 - **#16** feat(deploy): preparación Streamlit Community Cloud (M6a) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/16
 - **#17** fix(deploy): torchvision cpu (M6a) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/17
+- **#18** docs(deploy): cierre de M6a — app en producción — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/18
+- **#19** feat(docker): dockerización de la aplicación (M5) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/19
 
 ---
 
@@ -46,11 +48,11 @@
 - **#3** [cerrada] M3 · Groq como LLM — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/3
 - **#4** [cerrada] M4 · Batería de 20 preguntas + informe de evaluación — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/4
 - **#5** [cerrada] M4 · Recalibrar UMBRAL_DISTANCIA (U1) — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/5
-- **#6** [abierta] M5 · Dockerizar la aplicación — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/6
+- **#6** [cerrada] M5 · Dockerizar la aplicación — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/6
 - **#7** [abierta] M6 · Despliegue en entorno accesible — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/7
 - **#10** [cerrada] M2b — Historial y persistencia en la app Streamlit — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/10
 - **#12** [cerrada] docs(repo) — Centro de navegación docs/URLS.md generado por script — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/12
-- **#15** [abierta] M6a — Despliegue en Streamlit Community Cloud — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/15
+- **#15** [cerrada] M6a — Despliegue en Streamlit Community Cloud — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/15
 
 ---
 
