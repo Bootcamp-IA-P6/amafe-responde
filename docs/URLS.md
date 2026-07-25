@@ -2,7 +2,7 @@
 
 > Centro de navegación del proyecto AMAFE Responde (P12JJ).
 > Generado automáticamente por `scripts/show_urls.sh`.
-> Última revisión: 2026-07-24
+> Última revisión: 2026-07-25
 
 ---
 
@@ -32,6 +32,7 @@
 - **#17** fix(deploy): torchvision cpu (M6a) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/17
 - **#18** docs(deploy): cierre de M6a — app en producción — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/18
 - **#19** feat(docker): dockerización de la aplicación (M5) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/19
+- **#20** feat(deploy): despliegue en Hugging Face Spaces (M6b) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/20
 
 ---
 
@@ -41,7 +42,7 @@
 - Abiertas: https://github.com/Bootcamp-IA-P6/amafe-responde/issues?q=is%3Aissue+is%3Aopen
 - Cerradas: https://github.com/Bootcamp-IA-P6/amafe-responde/issues?q=is%3Aissue+is%3Aclosed
 
-### Listado (estado a 2026-07-24)
+### Listado (estado a 2026-07-25)
 
 - **#1** [cerrada] M1 · README técnico — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/1
 - **#2** [cerrada] M2 · app.py con Streamlit — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/2
@@ -53,6 +54,7 @@
 - **#10** [cerrada] M2b — Historial y persistencia en la app Streamlit — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/10
 - **#12** [cerrada] docs(repo) — Centro de navegación docs/URLS.md generado por script — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/12
 - **#15** [cerrada] M6a — Despliegue en Streamlit Community Cloud — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/15
+- **#21** [abierta] app: no mostrar 'Fuentes consultadas' cuando el no-sé llega por capa 2 — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/21
 
 ---
 

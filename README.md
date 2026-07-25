@@ -16,6 +16,7 @@ Funciona con LLM en la nube (Groq) o íntegramente en local (Ollama) — el
 código es idéntico en ambos modos.
 
 🌐 **App en vivo**: https://amafe-responde.streamlit.app
+🤗 **App en vivo (Docker)**: https://huggingface.co/spaces/JJRSE/amafe-responde
 
 > ⚠️ **Aviso**: este es un proyecto formativo (proyecto final del Bootcamp de
 > IA de Factoría F5) y **no es una herramienta oficial de AMAFE**. Utiliza
@@ -190,8 +191,8 @@ de navegación en [`docs/URLS.md`](docs/URLS.md).
 - [x] M3 — Groq como LLM ([#9](https://github.com/Bootcamp-IA-P6/amafe-responde/pull/9))
 - [x] M4 — Batería de 20 preguntas, comparativa de 3 modelos e informe de evaluación
 - [x] M6a — Despliegue en Streamlit Community Cloud ([app en vivo](https://amafe-responde.streamlit.app), [#16](https://github.com/Bootcamp-IA-P6/amafe-responde/pull/16), [#17](https://github.com/Bootcamp-IA-P6/amafe-responde/pull/17))
-- [ ] M5 — Docker ([#6](https://github.com/Bootcamp-IA-P6/amafe-responde/issues/6))
-- [ ] M6b — Despliegue dockerizado en otra plataforma ([#7](https://github.com/Bootcamp-IA-P6/amafe-responde/issues/7))
+- [x] M5 — Docker ([#6](https://github.com/Bootcamp-IA-P6/amafe-responde/issues/6))
+- [x] M6b — Despliegue dockerizado en Hugging Face Spaces ([app en vivo](https://huggingface.co/spaces/JJRSE/amafe-responde)), ([#7](https://github.com/Bootcamp-IA-P6/amafe-responde/issues/7))
 
 **Fase 2 (fuera del MVP):** incorporación de los PDFs institucionales
 (memorias, boletines, auditorías) con estrategia de lista blanca, y OCR de
