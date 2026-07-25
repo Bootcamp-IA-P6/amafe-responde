@@ -398,3 +398,43 @@ local por las capas descomprimidas).
   "Fuentes consultadas" bajo el mensaje — inconsistencia visual heredada
   de M2, sin impacto en veracidad.
 
+## 20260724 — M6b: despliegue dockerizado en Hugging Face Spaces (issue #7)
+
+Segunda app en producción, ahora desde la imagen Docker de M5:
+**https://huggingface.co/spaces/JJRSE/amafe-responde**
+
+- **Cambio de política de HF descubierto en vivo**: los Spaces Docker/Gradio
+  pasaron a requerir plan de pago (PRO, 9 $/mes; solo los estáticos siguen
+  gratis) — verificado en el formulario y en la documentación oficial. La
+  issue #7, cerrada prematuramente por el "Closes" del PR #20 (metadatos),
+  se reabrió para mantener el Kanban veraz hasta el despliegue real.
+- **PLAT2d — Suscripción PRO**: decisión económica de JJ tras valorar las
+  alternativas (Cloud Run con tarjeta, Render 512 MB con OOM seguro,
+  consulta al tutor). Con PRO, el hardware CPU Basic entra en la
+  suscripción. Custom Domain (incluido en PRO) queda documentado como
+  línea futura condicionada a la validación explícita de AMAFE.
+- **Space**: SDK Docker (plantilla Blank), CPU Basic, público, licencia
+  MIT. Puerto vía `app_port: 8501` del front-matter YAML del README
+  (FM1a: un solo README para GitHub y el Space). Secrets `LLM_BASE_URL`,
+  `LLM_MODEL` y `LLM_API_KEY` en el panel del Space (llegan como variables
+  de entorno). Token de escritura dedicado para el push
+  (push-amafe-responde-20260724), revocable sin tocar la cuenta.
+- **Incidencia y receta — el portero de binarios**: HF rechaza binarios en
+  git normal (los `.bin` del índice y `chroma.sqlite3`) y exige LFS/Xet,
+  inspeccionando además toda la historia del push. Solución sin tocar el
+  main de GitHub: rama espejo huérfana `hf-main` (un único commit del
+  estado actual) con `git lfs track "*.bin" "*.sqlite3"`, y push forzado
+  `hf-main:main` al remoto del Space. Verificado: "Uploading LFS objects
+  100% (4/4), 7.3 MB". Para redesplegar tras cambios en main: borrar y
+  recrear el espejo con la misma receta (candidata a script sellado si se
+  vuelve rutina).
+- **Verificación en producción** (vídeo del 24/07, fotogramas extraídos):
+  build en los servidores de HF con la misma receta del build local;
+  mini-M4 superado — "¿Qué es el Espacio Joven?" con fuentes y caption
+  `openai/gpt-oss-120b`; "¿Cuánto cuesta la entrada al Museo del Prado?"
+  → no-sé.
+- **Estado final del roadmap**: M1-M6b completados (8/8). La misma app
+  corre en dos plataformas con dos estrategias distintas (Streamlit Cloud
+  desde el repo; HF Spaces desde la imagen Docker), con secretos fuera del
+  repo en ambas.
+
