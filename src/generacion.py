@@ -51,7 +51,7 @@ LLM_MODEL = os.getenv("LLM_MODEL", "qwen3:8b")
 LLM_TEMPERATURE = float(os.getenv("LLM_TEMPERATURE", "0.2"))
 LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "800"))
 LLM_SEED = os.getenv("LLM_SEED")  # opcional; si existe, refuerza reproducibilidad
-UMBRAL_DISTANCIA = float(os.getenv("UMBRAL_DISTANCIA", "0.65"))
+UMBRAL_DISTANCIA = float(os.getenv("UMBRAL_DISTANCIA", "0.75"))
 TOP_K = int(os.getenv("TOP_K", "5"))
 
 MENSAJE_NO_SE = (
