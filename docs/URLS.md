@@ -2,7 +2,7 @@
 
 > Centro de navegación del proyecto AMAFE Responde (P12JJ).
 > Generado automáticamente por `scripts/show_urls.sh`.
-> Última revisión: 2026-07-26
+> Última revisión: 2026-07-29
 
 ---
 
@@ -34,6 +34,7 @@
 - **#19** feat(docker): dockerización de la aplicación (M5) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/19
 - **#20** feat(deploy): despliegue en Hugging Face Spaces (M6b) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/20
 - **#22** docs(deploy): cierre de M6b — app Docker en Hugging Face Spaces — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/22
+- **#23** docs: cierre de entrega — umbral, README y mapa de URLs — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/23
 
 ---
 
@@ -43,7 +44,7 @@
 - Abiertas: https://github.com/Bootcamp-IA-P6/amafe-responde/issues?q=is%3Aissue+is%3Aopen
 - Cerradas: https://github.com/Bootcamp-IA-P6/amafe-responde/issues?q=is%3Aissue+is%3Aclosed
 
-### Listado (estado a 2026-07-26)
+### Listado (estado a 2026-07-29)
 
 - **#1** [cerrada] M1 · README técnico — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/1
 - **#2** [cerrada] M2 · app.py con Streamlit — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/2
