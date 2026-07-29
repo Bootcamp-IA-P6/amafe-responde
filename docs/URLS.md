@@ -2,7 +2,7 @@
 
 > Centro de navegación del proyecto AMAFE Responde (P12JJ).
 > Generado automáticamente por `scripts/show_urls.sh`.
-> Última revisión: 2026-07-25
+> Última revisión: 2026-07-26
 
 ---
 
@@ -33,6 +33,7 @@
 - **#18** docs(deploy): cierre de M6a — app en producción — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/18
 - **#19** feat(docker): dockerización de la aplicación (M5) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/19
 - **#20** feat(deploy): despliegue en Hugging Face Spaces (M6b) — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/20
+- **#22** docs(deploy): cierre de M6b — app Docker en Hugging Face Spaces — https://github.com/Bootcamp-IA-P6/amafe-responde/pull/22
 
 ---
 
@@ -42,7 +43,7 @@
 - Abiertas: https://github.com/Bootcamp-IA-P6/amafe-responde/issues?q=is%3Aissue+is%3Aopen
 - Cerradas: https://github.com/Bootcamp-IA-P6/amafe-responde/issues?q=is%3Aissue+is%3Aclosed
 
-### Listado (estado a 2026-07-25)
+### Listado (estado a 2026-07-26)
 
 - **#1** [cerrada] M1 · README técnico — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/1
 - **#2** [cerrada] M2 · app.py con Streamlit — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/2
@@ -50,7 +51,7 @@
 - **#4** [cerrada] M4 · Batería de 20 preguntas + informe de evaluación — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/4
 - **#5** [cerrada] M4 · Recalibrar UMBRAL_DISTANCIA (U1) — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/5
 - **#6** [cerrada] M5 · Dockerizar la aplicación — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/6
-- **#7** [abierta] M6 · Despliegue en entorno accesible — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/7
+- **#7** [cerrada] M6 · Despliegue en entorno accesible — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/7
 - **#10** [cerrada] M2b — Historial y persistencia en la app Streamlit — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/10
 - **#12** [cerrada] docs(repo) — Centro de navegación docs/URLS.md generado por script — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/12
 - **#15** [cerrada] M6a — Despliegue en Streamlit Community Cloud — https://github.com/Bootcamp-IA-P6/amafe-responde/issues/15
