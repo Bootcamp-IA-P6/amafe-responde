@@ -24,3 +24,11 @@ logs/*
 !logs/.gitkeep
 eval/lista_blanca*.csv
 *inventario_pdf*.csv
+
+# Archivos temporales de Office 365
+~$*
+
+
+# Cualquier variante de .env, salvo las plantillas
+.env.*
+!.env.*.example
