@@ -438,3 +438,50 @@ Segunda app en producción, ahora desde la imagen Docker de M5:
   desde el repo; HF Spaces desde la imagen Docker), con secretos fuera del
   repo en ambas.
 
+## 20260801-03 — VIS: repliegue y despliegue reversibles de visibilidad
+
+- **Naturaleza:** decisión propia de JJ. **No** responde a ninguna petición de
+  AMAFE ni de su junta directiva. Parte del ofrecimiento: si gusta → despliegue;
+  si no gusta → repliegue. Ante la mínima sospecha de incomodidad, la opción de
+  replegar debe estar disponible y ser ejecutable de inmediato.
+- **Alcance (A4):** HF Space, repo `Bootcamp-IA-P6/amafe-responde`, Project #77
+  y app de Streamlit. Los dos primeros son propios; repo y Project pertenecen a
+  la organización del bootcamp y son entregables evaluables, por lo que se avisó
+  al tutor por Discord antes de ejecutar (C4).
+- **Implementación:** `scripts/visibilidad_20260801170139S.py` (v4) —
+  dry-run por defecto (D1), `--revertir` (D2), verificación previa que aborta
+  con `rc=2` sin tocar nada (D4), `HF_TOKEN` desde `<raíz>/.env` con
+  python-dotenv y precedencia del entorno (E1/F1), procedencia del token
+  informada sin exponer su valor (H1). Alias de proyecto en
+  `scripts/alias_visibilidad.sh`, sourceable, no global.
+- **Streamlit:** sin API pública para visibilidad. Paso manual en ambos
+  sentidos; el script lo recuerda por stderr.
+- **API de huggingface_hub 1.23.0** (verificada, no supuesta):
+  `update_repo_visibility` **eliminada** en la serie 1.x;
+  `update_repo_settings(private=...)` vigente y sin deprecación;
+  `pause_space`, `restart_space`, `space_info`, `whoami` presentes.
+  `visibility="protected"` disponible como punto intermedio no usado.
+- **Incidencia `HF_HUB_OFFLINE`:** `export HF_HUB_OFFLINE=1` en `~/.bashrc:82`,
+  residuo de M5, hacía fallar el script. La variable se retiró del shell
+  (`Dockerfile:28` la define por su cuenta donde sí procede) y además el script
+  la neutraliza en su propio proceso. Detalle: la librería fija la constante en
+  el **import**, no en cada llamada.
+- **Incidencia de intérprete:** `python` en Git Bash resuelve al Python global
+  de Windows (3.13), no al `.venv` (3.12). Invocar siempre con `uv run python`.
+  `huggingface_hub` declarada dependencia directa en `pyproject.toml` (I2).
+- **Ciclo completo verificado contra APIs reales:**
+  repliegue 20260801175220S (3/3 aplicados, 404 en ventana privada en los
+  cuatro recursos) → despliegue 20260803125734 → repliegue 20260803131239 →
+  despliegue final. Evidencias en `docs/evidencias/`.
+- **Hallazgo operativo:** privatizar **no** invalida sesiones ya abiertas en
+  GitHub ni Streamlit; solo impide accesos nuevos. HF corta de inmediato.
+  Para verificar un repliegue hay que abrir una ventana privada **nueva**.
+- **Irreversible:** stars y watchers del repo se pierden al privatizar y no se
+  recuperan. Los forks previos siguen siendo públicos.
+- **Red de seguridad:** `docs/evidencias/reversion_manual.v2.20260803142755L.md`
+  con los comandos manuales de los cuatro activos.
+- **Estado al aparcar el proyecto (20260805): todo público.**
+- **Pendiente source scripts/alias_visibilidad.sh:** 
+  Es necesario evaluar su funcionalidad, aún no probado.
+  Se sube para futuros tests 20260805125042X.
+

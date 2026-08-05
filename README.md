@@ -120,6 +120,9 @@ crudas (JSONL de trazabilidad) están en `eval/`.
   producción) **o** [Ollama](https://ollama.com/) con `qwen3:8b` (modo local)
 - Solo para regenerar el corpus: el corpus web de AMAFE descargado en local
   (fase previa del proyecto; ruta en `.env`)
+- Solo para la gestión de visibilidad: [`gh`](https://cli.github.com/)
+  autenticado (scopes `repo` y `project`) y `HF_TOKEN` con permiso de
+  escritura en `.env`
 
 ## Instalación
 
@@ -164,6 +167,10 @@ recuperados con puntuaciones, prompt enviado, respuesta, fuentes citadas,
 parámetros del modelo y timestamp — la trazabilidad completa de cada
 consulta.
 
+> **Siempre `uv run python`, nunca `python` a secas.** En Git Bash sobre
+> Windows, `python` resuelve al intérprete global del sistema, no al `.venv`
+> del proyecto, y las dependencias no están ahí.
+
 ## Configuración (`.env`)
 
 Las variables principales (ver `.env.example` anotado):
@@ -196,6 +203,13 @@ de navegación en [`docs/URLS.md`](docs/URLS.md).
 - [x] M6a — Despliegue en Streamlit Community Cloud ([app en vivo](https://amafe-responde.streamlit.app), [#16](https://github.com/Bootcamp-IA-P6/amafe-responde/pull/16), [#17](https://github.com/Bootcamp-IA-P6/amafe-responde/pull/17), [#18](https://github.com/Bootcamp-IA-P6/amafe-responde/pull/18))
 - [x] M5 — Docker ([#19](https://github.com/Bootcamp-IA-P6/amafe-responde/pull/19))
 - [x] M6b — Despliegue dockerizado en Hugging Face Spaces ([app en vivo](https://huggingface.co/spaces/JJRSE/amafe-responde), [#20](https://github.com/Bootcamp-IA-P6/amafe-responde/pull/20), [#22](https://github.com/Bootcamp-IA-P6/amafe-responde/pull/22))
+- [x] VIS — Gestión reversible de visibilidad de los cuatro activos públicos
+
+Materiales de la presentación técnica (30/07/2026) en
+[`docs/P12JJ_Presentacion_visual_1mas12diapos_20260730/`](docs/P12JJ_Presentacion_visual_1mas12diapos_20260730/):
+diapositivas, capturas de ambos despliegues y vídeos de demostración.
+
+**Visibilidad actual (05/08/2026): todos los activos públicos.**
 
 **Fase 2 (fuera del MVP):** incorporación de los PDFs institucionales
 (memorias, boletines, auditorías) con estrategia de lista blanca, y OCR de
@@ -207,6 +221,46 @@ del corpus web (previsto para fase 2); y la recuperación es sensible a la
 formulación — alguna paráfrasis no recupera la página correcta (q12 del
 informe). En ambos casos el guardarraíl responde "no sé" en lugar de
 inventar.
+
+## Gestión de visibilidad
+
+Los cuatro activos públicos del proyecto (app de Streamlit, Space de Hugging
+Face, repositorio y tablero Kanban) pueden pasar a privado y volver a público
+con un solo comando, de forma reversible y trazable.
+
+El motivo es deliberado: el despliegue se ofrece a AMAFE, y un ofrecimiento
+completo incluye su reverso. Si el resultado gusta, despliegue; si no, la
+retirada debe estar disponible de inmediato y no depender de recordar dónde
+estaba cada ajuste.
+
+```bash
+source scripts/alias_visibilidad.sh   # carga las funciones (ámbito de proyecto)
+
+vis_estado             # lee el estado actual, no toca nada
+vis_repliegue          # simula el paso a privado
+vis_repliegue_real     # lo aplica (pide confirmación escrita)
+vis_despliegue         # simula la vuelta a público
+vis_despliegue_real    # la aplica (pide confirmación escrita)
+```
+
+Por debajo actúa `scripts/visibilidad_20260801170139S.py`, que ejecuta en
+seco por defecto, verifica permisos antes de tocar nada (aborta con `rc=2`
+sin efectos si falta alguno) y emite un JSON de trazabilidad por stdout con
+el estado antes y después de cada activo.
+
+> **La app de Streamlit es manual en ambos sentidos**: Community Cloud no
+> expone API para la visibilidad. El script lo recuerda por stderr y
+> [`docs/evidencias/reversion_manual.v2.20260803142755L.md`](docs/evidencias/)
+> recoge el procedimiento completo de los cuatro activos como red de
+> seguridad.
+
+Dos comportamientos verificados que conviene conocer: privatizar el
+repositorio **pierde de forma irreversible** stars y watchers, y los forks
+previos siguen siendo públicos; y las sesiones ya abiertas en GitHub y
+Streamlit **conservan el acceso** hasta cerrarlas, mientras que Hugging Face
+corta de inmediato — para comprobar un repliegue hay que abrir una ventana
+privada nueva. El ciclo completo está probado en ambos sentidos contra las
+APIs reales, con evidencias en [`docs/evidencias/`](docs/evidencias/).
 
 ## Principios de trabajo
 

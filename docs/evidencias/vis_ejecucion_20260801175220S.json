@@ -1,0 +1,76 @@
+{
+  "utc": "20260801155221",
+  "modo": "EJECUCION",
+  "accion": "REPLIEGUE A PRIVADO",
+  "hf_token_origen": ".env",
+  "hf_hub_offline_neutralizada": false,
+  "resultado": "ok",
+  "verificacion": [
+    {
+      "nombre": "gh_instalado",
+      "ok": true,
+      "detalle": "C:\\Program Files\\GitHub CLI\\gh.EXE"
+    },
+    {
+      "nombre": "gh_scopes",
+      "ok": true,
+      "detalle": "scopes ok (delete_repo, gist, project, read:org, repo, workflow)"
+    },
+    {
+      "nombre": "repo_admin",
+      "ok": true,
+      "detalle": "admin sobre Bootcamp-IA-P6/amafe-responde"
+    },
+    {
+      "nombre": "proyecto_legible",
+      "ok": true,
+      "detalle": "project #77 'AMAFE Responde' public=True"
+    },
+    {
+      "nombre": "hf_escritura",
+      "ok": true,
+      "detalle": "HF JJRSE con acceso a JJRSE/amafe-responde; HF_TOKEN leido de: .env"
+    }
+  ],
+  "streamlit": "manual_pendiente",
+  "activos": [
+    {
+      "activo": "space",
+      "objetivo_privado": true,
+      "antes": {
+        "privado": false,
+        "etapa": "SLEEPING"
+      },
+      "estado": "aplicado",
+      "detalle": "space -> private + paused",
+      "despues": {
+        "privado": true,
+        "etapa": "PAUSED"
+      }
+    },
+    {
+      "activo": "repo",
+      "objetivo_privado": true,
+      "antes": {
+        "privado": false
+      },
+      "estado": "aplicado",
+      "detalle": "repo -> private",
+      "despues": {
+        "privado": true
+      }
+    },
+    {
+      "activo": "proyecto",
+      "objetivo_privado": true,
+      "antes": {
+        "privado": false
+      },
+      "estado": "aplicado",
+      "detalle": "project #77 -> PRIVATE",
+      "despues": {
+        "privado": true
+      }
+    }
+  ]
+}
